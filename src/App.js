@@ -2,7 +2,7 @@ import "./App.css";
 import Search from "./Search";
 import BaseWindow from "./BaseWindow";
 import SourceLink from "./SourceLink";
-function App() {
+export default function App() {
   return (
     <div className="App">
       <div className="bg">
@@ -15,5 +15,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
