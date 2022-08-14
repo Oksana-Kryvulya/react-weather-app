@@ -1,0 +1,29 @@
+.forecast-weather {
+  margin: 10px auto;
+  padding: 20px;
+  border: 1px solid #dadada;
+  border-radius: 10px;
+  background: linear-gradient(#f7dd95, #d788bf);
+}
+.day-temperatura,
+.week-day {
+  height: 50px;
+  font-size: 25px;
+  color: #27296d;
+}
+.day-icon {
+  position: relative;
+  bottom: 7px;
+}
+.min-temperatura {
+  opacity: 0.7;
+}
+@media (max-width: 800px) {
+  .day-temperatura,
+  .week-day {
+    font-size: 20px;
+  }
+  .day-icon {
+    bottom: 12px;
+  }
+}

@@ -1,0 +1,24 @@
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  cursor: default;
+  background: url(https://s3.amazonaws.com/shecodesio-production/uploads/files/000/037/745/original/1585952628_oblaka_nebo_zakat_136072_1440x2560.jpg?1655641544);
+
+  height: 100%;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-color: #7b5a5f;
+}
+p {
+  color: white;
+}
+
+.weather-app {
+  max-width: 1000px !important;
+}
+@media (min-width: 1400px) {
+  .pt-xxl-5 {
+    padding-top: 6rem !important;
+  }
+}

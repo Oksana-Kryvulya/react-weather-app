@@ -1,0 +1,14 @@
+.Search .input-window {
+  margin: 100px auto 10px;
+  padding: 20px;
+  border: 1px solid #dadada;
+  border-radius: 10px;
+  background: #7695ce;
+  box-shadow: 3px 3px rgba(39, 39, 44, 0.2);
+}
+.flag {
+  text-align: end;
+}
+.btn-search {
+  text-align: start;
+}
