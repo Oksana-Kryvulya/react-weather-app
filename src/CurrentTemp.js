@@ -2,7 +2,7 @@ import React from "react";
 
 export default function CurrentTemp(props) {
   function convertToFahrenheit() {
-    return Math.round((props.temperatura * 5) / 9 + 32);
+    return Math.round((props.temperatura * 9) / 5 + 32);
   }
   console.log("CurrentTemp");
   console.log(props.unit);
