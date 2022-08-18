@@ -1,15 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
+import CurrentTemp from "./CurrentTemp";
 import "./CurrentWeather.css";
 import WeekDay from "./WeekDay";
 
 export default function CurrentWeather(props) {
-  console.log(props.data);
+  let [unit, setUnit] = useState("celsius");
+  console.log("current");
+  let [stateCelsius, setStateCelsius] = useState("active");
+  let [stateFahrenheit, setStateFahrenheit] = useState("hand");
+
+  function changeToFahrenheit(event) {
+    event.preventDefault();
+    if (unit != "fahrenheit") {
+      setStateFahrenheit("active");
+      setStateCelsius("hand");
+      setUnit("fahrenheit");
+    }
+  }
+  function changeToCelsius(event) {
+    event.preventDefault();
+    if (unit != "celsius") {
+      setStateFahrenheit("hand");
+      setStateCelsius("active");
+      setUnit("celsius");
+    }
+  }
+
   function currentTime(date) {
     return date.toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
     });
   }
+
+  console.log("CurrentWeather");
+  console.log(props.data);
+
   return (
     <div className="CurrentWeather">
       <div className="base-window">
@@ -23,12 +49,16 @@ export default function CurrentWeather(props) {
           </div>
           <div className="col-3">
             <p className="units">
-              <span className="active" id="celsius">
-                °C{" "}
+              <span className={stateCelsius} id="celsius">
+                <a href="/" onClick={changeToCelsius}>
+                  °C{" "}
+                </a>
               </span>{" "}
               |
-              <span className="hand" id="fahrenheit">
-                °F
+              <span className={stateFahrenheit} id="fahrenheit">
+                <a href="/" onClick={changeToFahrenheit}>
+                  °F{" "}
+                </a>
               </span>
             </p>
           </div>
@@ -43,12 +73,8 @@ export default function CurrentWeather(props) {
                 </span>{" "}
                 <span id="current-date">{props.date.getDate()}</span>
               </h2>
-              <h1>
-                <span id="current-temp">
-                  {Math.round(props.data.temperatura)}
-                </span>
-                <span id="current-units">°C</span>
-              </h1>
+              <CurrentTemp temperatura={props.data.temperatura} unit={unit} />
+
               <div className="icon-image">
                 <img
                   src={`https://openweathermap.org/img/wn/${props.data.icon}@2x.png`}

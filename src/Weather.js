@@ -9,7 +9,7 @@ export default function Weather(props) {
   let baseGeoUrl = `https://api.openweathermap.org/geo/1.0/direct?limit=1&appid=${apiKey}`;
   let baseWeatherUrl = `https://api.openweathermap.org/data/3.0/onecall?exclude=hourly&appid=${apiKey}`;
 
-  // let [city, setCity] = useState(props.city);
+  let [city, setCity] = useState(props.city);
 
   const [weatherData, setWeatherData] = useState({
     ready: false,
@@ -58,8 +58,15 @@ export default function Weather(props) {
       .then(setWeatherInfo);
   }
 
-  function getGeoData(city) {
+  function search() {
     axios.get(`${baseGeoUrl}&q=${city}`).then(getWeatherData);
+  }
+  function handleSubmit(event) {
+    event.preventDefault();
+    search();
+  }
+  function changeCityName(event) {
+    setCity(event.target.value);
   }
 
   if (weatherData.ready) {
@@ -69,13 +76,18 @@ export default function Weather(props) {
     return (
       <div className="Search">
         <div className="input-window mt-2">
-          <form id="input-city-form" className="row g-3">
+          <form
+            id="input-city-form"
+            className="row g-3"
+            onSubmit={handleSubmit}
+          >
             <div className="col-md-6">
               <input
                 className="form-control input-lg"
-                type="text"
+                type="search"
                 placeholder="Enter city..."
                 id="input-city"
+                onChange={changeCityName}
               />
             </div>
             <div className="col text-start">
@@ -106,7 +118,7 @@ export default function Weather(props) {
       </div>
     );
   } else {
-    getGeoData(props.city);
+    search();
     console.log("loading");
     console.log(weatherData.ready);
     return "Loading...";

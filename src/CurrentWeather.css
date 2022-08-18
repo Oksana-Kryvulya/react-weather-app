@@ -42,6 +42,7 @@ p {
   font-weight: bold;
   cursor: default;
 }
+
 .hand:hover {
   cursor: pointer;
 }
@@ -54,4 +55,10 @@ p {
 .units {
   color: white;
   text-align: right;
+}
+
+.active a,
+.hand a {
+  text-decoration: none;
+  color: white;
 }
