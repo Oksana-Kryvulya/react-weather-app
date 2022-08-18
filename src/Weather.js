@@ -9,7 +9,7 @@ export default function Weather(props) {
   let baseGeoUrl = `https://api.openweathermap.org/geo/1.0/direct?limit=1&appid=${apiKey}`;
   let baseWeatherUrl = `https://api.openweathermap.org/data/3.0/onecall?exclude=hourly&appid=${apiKey}`;
 
-  let [city, setCity] = useState(props.city);
+  // let [city, setCity] = useState(props.city);
 
   const [weatherData, setWeatherData] = useState({
     ready: false,
