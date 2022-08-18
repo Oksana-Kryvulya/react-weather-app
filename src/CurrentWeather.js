@@ -11,7 +11,7 @@ export default function CurrentWeather(props) {
 
   function changeToFahrenheit(event) {
     event.preventDefault();
-    if (unit != "fahrenheit") {
+    if (unit !== "fahrenheit") {
       setStateFahrenheit("active");
       setStateCelsius("hand");
       setUnit("fahrenheit");
@@ -19,7 +19,7 @@ export default function CurrentWeather(props) {
   }
   function changeToCelsius(event) {
     event.preventDefault();
-    if (unit != "celsius") {
+    if (unit !== "celsius") {
       setStateFahrenheit("hand");
       setStateCelsius("active");
       setUnit("celsius");
