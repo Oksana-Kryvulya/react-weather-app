@@ -15,7 +15,7 @@ p {
 }
 
 .weather-app {
-  max-width: 1000px !important;
+  max-width: 600px !important;
 }
 @media (min-width: 1400px) {
   .pt-xxl-5 {
