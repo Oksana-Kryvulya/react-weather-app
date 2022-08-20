@@ -9,13 +9,42 @@ export default function Weather(props) {
   let baseGeoUrl = `https://api.openweathermap.org/geo/1.0/direct?limit=1&appid=${apiKey}`;
   let baseWeatherUrl = `https://api.openweathermap.org/data/3.0/onecall?exclude=hourly&appid=${apiKey}`;
 
-  let [city, setCity] = useState(props.city);
+  const [city, setCity] = useState(props.city);
 
   const [weatherData, setWeatherData] = useState({
     ready: false,
   });
+
+  let [unit, setUnit] = useState("celsius");
+  let [stateCelsius, setStateCelsius] = useState("active");
+  let [stateFahrenheit, setStateFahrenheit] = useState("hand");
+
   console.log("INITIALISING!!!!!!!!!!!!!!");
   console.log(weatherData.ready);
+
+  function changeToFahrenheit(event) {
+    event.preventDefault();
+    if (unit !== "fahrenheit") {
+      setStateFahrenheit("active");
+      setStateCelsius("hand");
+      setUnit("fahrenheit");
+    }
+  }
+  function changeToCelsius(event) {
+    event.preventDefault();
+    if (unit !== "celsius") {
+      setStateFahrenheit("hand");
+      setStateCelsius("active");
+      setUnit("celsius");
+    }
+  }
+
+  function currentTime(date) {
+    return date.toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
 
   function setWeatherInfo(response) {
     console.log("setWeatherInfo");
@@ -71,7 +100,7 @@ export default function Weather(props) {
 
   if (weatherData.ready) {
     console.log(weatherData);
-    console.log("rendering");
+    console.log("rendering weather");
 
     return (
       <div className="Search">
@@ -108,13 +137,40 @@ export default function Weather(props) {
             </div>
           </form>
         </div>
-
-        <CurrentWeather
-          data={weatherData.currentWeather}
-          city={weatherData.city}
-          date={weatherData.date}
-          country={weatherData.country}
-        />
+        <div className="base-window">
+          <div className="row">
+            <div className="col-9 ">
+              <p className="text-start">
+                <span id="city">{weatherData.city}</span>,{" "}
+                <span id="country"> {weatherData.country} </span>, last updated{" "}
+                <span id="current-time"> {currentTime(weatherData.date)}</span>
+              </p>
+            </div>
+            <div className="col-3">
+              <p className="units">
+                <span className={stateCelsius} id="celsius">
+                  <a href="/" onClick={changeToCelsius}>
+                    °C{" "}
+                  </a>
+                </span>{" "}
+                |
+                <span className={stateFahrenheit} id="fahrenheit">
+                  <a href="/" onClick={changeToFahrenheit}>
+                    °F{" "}
+                  </a>
+                </span>
+              </p>
+            </div>
+          </div>
+          <div className="row">
+            <CurrentWeather
+              data={weatherData.currentWeather}
+              city={weatherData.city}
+              date={weatherData.date}
+              unit={unit}
+            />
+          </div>
+        </div>
       </div>
     );
   } else {

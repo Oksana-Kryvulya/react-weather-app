@@ -1,3 +1,57 @@
+body {
+  font-family: Helvetica, Arial, sans-serif;
+  cursor: default;
+}
+h1 {
+  color: #27296d;
+  text-align: center;
+  font-size: 40px;
+}
+h2 {
+  color: #27296d;
+  text-align: center;
+}
+h3 {
+  color: rgb(37, 33, 33);
+  text-align: center;
+  font-size: 16px;
+}
+p {
+  color: white;
+}
+.base-window {
+  margin: 10px auto;
+  padding: 20px;
+  border: 1px solid #dadada;
+  border-radius: 10px;
+  background: #7695ce;
+  box-shadow: 3px 3px rgba(39, 39, 44, 0.2);
+}
+
+.weather-data {
+  text-align: center;
+  color: rgb(37, 33, 33);
+}
+.active {
+  font-weight: bold;
+  cursor: default;
+}
+
+.hand:hover {
+  cursor: pointer;
+}
+
+.units {
+  color: white;
+  text-align: right;
+}
+
+.active a,
+.hand a {
+  text-decoration: none;
+  color: white;
+}
+
 .Search .input-window {
   margin: 100px auto 10px;
   padding: 20px;
