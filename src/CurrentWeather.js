@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import CurrentTemp from "./CurrentTemp";
 import "./CurrentWeather.css";
 import WeekDay from "./WeekDay";
 
 export default function CurrentWeather(props) {
-  console.log("CurrentWeather");
-  console.log(props.data);
-
   return (
     <div className="CurrentWeather">
       <div className="current-weather" style={{ height: `25rem` }}>
