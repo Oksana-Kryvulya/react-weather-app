@@ -20,7 +20,7 @@ export default function CurrentWeather(props) {
           <img
             src={`https://openweathermap.org/img/wn/${props.data.icon}@2x.png`}
             style={{ border: `20px` }}
-            alt="Clear"
+            alt="Weather icon"
             id="icon"
           />
         </div>
