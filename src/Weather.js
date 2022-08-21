@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Weather.css";
 import CurrentWeather from "./CurrentWeather";
+import ForecastWeather from "./ForecastWeather";
 import axios from "axios";
 export default function Weather(props) {
   let apiKey = "e8e6c14c32a29720f6e13266006ad7c5";
@@ -8,9 +9,12 @@ export default function Weather(props) {
   let country;
   let baseGeoUrl = `https://api.openweathermap.org/geo/1.0/direct?limit=1&appid=${apiKey}`;
   let baseWeatherUrl = `https://api.openweathermap.org/data/3.0/onecall?exclude=hourly&appid=${apiKey}`;
+  let baseReverseGeoUrl = `https://api.openweathermap.org/geo/1.0/reverse?limit=1&appid=${apiKey}`;
 
   const [city, setCity] = useState(props.city);
-
+  const [localCity, setLocalCity] = useState(null);
+  const [isLocalCity, setIsLocalCity] = useState(false);
+  const [val, setVal] = useState("");
   const [weatherData, setWeatherData] = useState({
     ready: false,
   });
@@ -19,8 +23,9 @@ export default function Weather(props) {
   let [stateCelsius, setStateCelsius] = useState("active");
   let [stateFahrenheit, setStateFahrenheit] = useState("hand");
 
-  console.log("INITIALISING!!!!!!!!!!!!!!");
-  console.log(weatherData.ready);
+  if (isLocalCity) {
+    search();
+  }
 
   function changeToFahrenheit(event) {
     event.preventDefault();
@@ -47,14 +52,15 @@ export default function Weather(props) {
   }
 
   function setWeatherInfo(response) {
-    console.log("setWeatherInfo");
+    setIsLocalCity(false);
+
     let forecastWeatherArray = new Array(7);
     response.data.daily.forEach(function (day, index) {
       if (index < 7) {
         forecastWeatherArray[index] = {
           maxTemp: response.data.daily[index].temp.max,
           minTemp: response.data.daily[index].temp.min,
-          icon: response.data.daily[index].weather.icon,
+          icon: response.data.daily[index].weather[0].icon,
           date: new Date(response.data.daily[index].dt * 1000),
         };
       }
@@ -90,18 +96,46 @@ export default function Weather(props) {
   function search() {
     axios.get(`${baseGeoUrl}&q=${city}`).then(getWeatherData);
   }
+
   function handleSubmit(event) {
     event.preventDefault();
+
     search();
   }
   function changeCityName(event) {
+    setVal(event.target.value);
     setCity(event.target.value);
   }
 
-  if (weatherData.ready) {
-    console.log(weatherData);
-    console.log("rendering weather");
+  function setLocalCityName(response) {
+    setCity(response.data[0].name);
+    setLocalCity(response.data[0].name);
+    setIsLocalCity(true);
+  }
 
+  function handleLocalPosition(position) {
+    let lat = position.coords.latitude;
+    let lon = position.coords.longitude;
+    axios
+      .get(`${baseReverseGeoUrl}&lat=${lat}&lon=${lon}`)
+      .then(setLocalCityName);
+  }
+
+  function setLocalWeather(event) {
+    event.preventDefault();
+
+    if (localCity) {
+      setCity(localCity);
+
+      setIsLocalCity(true);
+    } else {
+      navigator.geolocation.getCurrentPosition(handleLocalPosition);
+    }
+
+    setVal("");
+  }
+
+  if (weatherData.ready) {
     return (
       <div className="Search">
         <div className="input-window mt-2">
@@ -114,6 +148,7 @@ export default function Weather(props) {
               <input
                 className="form-control input-lg"
                 type="search"
+                value={val}
                 placeholder="Enter city..."
                 id="input-city"
                 onChange={changeCityName}
@@ -130,9 +165,11 @@ export default function Weather(props) {
             <div className="col flag">
               <input
                 className="btn btn-light"
-                type="submit"
+                type="button"
                 id="location"
                 value="🚩Local"
+                title="Local Weather"
+                onClick={setLocalWeather}
               />
             </div>
           </form>
@@ -163,20 +200,23 @@ export default function Weather(props) {
             </div>
           </div>
           <div className="row">
-            <CurrentWeather
-              data={weatherData.currentWeather}
-              city={weatherData.city}
-              date={weatherData.date}
-              unit={unit}
-            />
+            <div className="col-md">
+              <CurrentWeather
+                data={weatherData.currentWeather}
+                city={weatherData.city}
+                date={weatherData.date}
+                unit={unit}
+              />
+            </div>
+            <div className="col-md">
+              <ForecastWeather data={weatherData.forecastWeather} unit={unit} />
+            </div>
           </div>
         </div>
       </div>
     );
   } else {
     search();
-    console.log("loading");
-    console.log(weatherData.ready);
     return "Loading...";
   }
 }

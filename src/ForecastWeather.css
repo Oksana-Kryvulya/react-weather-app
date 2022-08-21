@@ -1,0 +1,7 @@
+.forecast-weather {
+  margin: 10px auto;
+  padding: 20px;
+  border: 1px solid #dadada;
+  border-radius: 10px;
+  background: linear-gradient(#f7dd95, #d788bf);
+}

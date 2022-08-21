@@ -1,11 +1,7 @@
 import React from "react";
+import ConvertToFahrenheit from "./ConvertToFahrenheit";
 
 export default function CurrentTemp(props) {
-  function convertToFahrenheit() {
-    return Math.round((props.temperatura * 9) / 5 + 32);
-  }
-  console.log("CurrentTemp");
-  console.log(props.unit);
   if (props.unit === "celsius")
     return (
       <h1>
@@ -16,7 +12,9 @@ export default function CurrentTemp(props) {
   else
     return (
       <h1>
-        <span id="current-temp">{convertToFahrenheit()}</span>
+        <span id="current-temp">
+          <ConvertToFahrenheit temperatura={props.temperatura} />
+        </span>
         <span id="current-units">°F</span>
       </h1>
     );
